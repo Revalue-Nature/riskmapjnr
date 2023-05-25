@@ -14,6 +14,7 @@
 import numpy as np
 from osgeo import gdal
 import pandas as pd
+import jenkspy
 
 # Local application imports
 from .misc import progress_bar, makeblock
@@ -137,6 +138,13 @@ def defor_cat(ldefrate_with_zero_file,
                 bins.append(sum_comp)
         # Remove duplicate
         bins = list(np.unique(bins))
+    
+    #natural breaks - jenks
+    if method == "Natural Breaks":
+        raster_array = np.array(catzero_band.ReadAsArray())
+        raster_unique = np.unique(raster_array)
+        values = np.delete(raster_unique, np.where(raster_unique == 65535))
+        bins = jenkspy.jenks_breaks(values, n_classes=ncat)
 
     # Replace last bin value 10000 by 10001 to include 10000 in
     # last category with pd.cut(right=False).
