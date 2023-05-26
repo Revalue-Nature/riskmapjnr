@@ -48,7 +48,7 @@ if not os.path.exists(out_dir):
 distance_range = np.arange(0, 3000, step=1)
 # sets of window size
 # Based on Verra guidance the optimal window size usually between 600 x 600m (20 x 20 pixels, 1 pixel size = 30 m) and 30,000 x 30,000 m (1000 x 1000 pixels)
-window_size_multiProcess = np.arange(23, 30, step=2)
+window_size_multiProcess = np.arange(21, 1000, step=2)
 # sets of slicing algorithm
 slice_algorithm_multiProcess = ["Equal Interval", "Equal Area", "Natural Breaks"]
 # grid size for validation process
@@ -183,12 +183,12 @@ results_makemap = makemap(
     fcc_file = ForestCoverChange_directory,
     time_interval = years_period_interval,
     output_dir = out_dir,
-    clean = False,
+    clean = True,
     dist_bins = distance_range,
     win_sizes = window_size_multiProcess,
     ncat = 30,
-    parallel = True,
-    ncpu = ncpu,
+    parallel = False,
+#    ncpu = ncpu,
     methods = slice_algorithm_multiProcess,
     csize = grid_size,
     figsize = (6.4, 4.8),
